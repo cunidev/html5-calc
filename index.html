@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="jquery.min.js"></script>
+	<script src="Mousetrap.min.js"></script>
+	<script src="panzoom.js"></script>
+	<script src="cookie.js"></script>
+	<script src="FileSaver.min.js"></script>
+    <script src="app-engine.js"></script>
+  </head>
+  <body>
+    <div class="container" id="mainWindow">
+      <div class="toolbar">
+        <h1>Indice di aggregazione</h1>
+      </div>
+	  <div id="about_label">
+		<p onclick="$('#modal-bg').fadeIn(500); $('#about_app').fadeIn(500);">about</p>
+	  </div>
+      <div id="image-container">
+		<canvas id="imageCanvas" width="0" height="0"></canvas>
+        
+		
+      </div>
+	  <div class="bottomBar">
+		<input type="file" id="imagePicker" name="imagePicker" onchange="onFileSelected(event)" />
+		<label for="imagePicker" id="imgPickerLabel">Seleziona immagine</label>
+		<p>Zoom: <input type="range" id="zoom" value="1" step="0.1" min="0.1" max="10"></p>
+		<div id="coordinates_display">x: 0;<br>y: 0;</div>
+	  </div>
+      <div class="content">
+	    <h1>Scala</h1>
+		<button onclick="setScale();">Imposta scala</button><button onclick="saveScale();">Salva scala</button><button onclick="resetCookie();">Reset cookie</button><br>
+		<table>
+			<tr><td>Punto #1:</td><td><input type="text" id="scale_1" size="4" value="0" autocomplete="off" disabled></td></tr>
+			<tr><td>Punto #2:</td><td><input type="text" id="scale_2" size="4" value="0" autocomplete="off" disabled></td></tr>
+			<tr><td>Distanza conosciuta:</td><td><input type="text" id="scale_distance" size="4" value="0" autocomplete="off" disabled></td></tr>
+			<tr><td>Unità di misura:</td><td><input type="text" id="scale_unit" size="4" value="cm" autocomplete="off" disabled></td></tr>
+			<tr style="height: 10px;"></tr>
+			<tr><td>Rapporto</td><td><p id="scale_prop">0 pixel = 0 cm</td></p></tr>
+		</table>
+		<h1>Elementi</h1>
+		<select id="elements" size="10">
+		</select><br>
+		<button id="addButton" onclick="addElement();">Aggiungi elemento</button><button onclick="deleteSelectedValue();">Elimina selezione</button><button onclick="drawDistances()">Disegna distanze</button>
+		<h1>Misurazione rapida</h1>
+		<button id="quick_measure_btn" onclick="quickMeasure();">Misura</button> <i id="quick_measure"></i>
+		<br><br>
+		<h1>Dati da esportare</h1>
+		<input type="radio" name="algorithm" id="no_algorithm"><label for="no_algorithm"> Nessuno (esporta dati)</label><br>
+		<input type="radio" name="algorithm" id="min_dist" value="min_dist" checked><label for="min_dist"> Solo distanza minima</label><br>
+		<input type="radio" name="algorithm" id="all_dist" value="all_dist"><label for="all_dist"> Tutte le distanze</label>
+		<br><br>
+		<button onclick="exportData();" class="exportButton">Esporta file .csv</button><button onclick="exportCanvas();" class="exportButton">Esporta immagine</button>
+	  </div>
+    </div>
+	<div id="modal-bg"></div>
+	<div id="about_app">
+	<br><br><br>
+		<h1>html5-calc</h1>
+		<p>Versione 0.1.1 - Licenza GNU GPL v3</p><br>
+		<p>Raffaele Tranquillini / CIMeC 2016</p><br>
+		
+		Per segnalazioni: <a href="https://github.com/cunidev/html5-calc">GitHub</a> (sezione Issues)<br><br>
+		<br><br><br><br><br><br>
+		<a onclick="$('#modal-bg').fadeOut(500); $('#about_app').fadeOut(500);" style="font-size: 1.2em;"><b>Chiudi</b></a><br>&nbsp;
+	</div>
+    <div id="loading">
+      <h1>Caricamento dati app...</h1><br>
+    </div>
+  </body>
+</html>
